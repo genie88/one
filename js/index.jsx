@@ -56,7 +56,7 @@ var Sprite = React.createClass({
           <div className="resize-hd resize-hd-b"></div>
           <div className="resize-hd resize-hd-l"></div>
           <div className="cont">
-            <img src="http://p0.qhimg.com/t01c1b079125298f4d0.png" style={self.state.styles}/>
+            <img src="image/demo.png" style={self.state.styles}/>
           </div>
           <a className="icon j_elem_remove"></a>
         </div>
