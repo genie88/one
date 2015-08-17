@@ -11,6 +11,12 @@ var Sprite = React.createClass({
     
   },
 
+  onRemove: function() {
+    //
+    alert("not implement yet");
+    
+  },
+
   // 运行组件上的动画
   goVelocity: function(handler) {
     //注入element引用
@@ -58,7 +64,7 @@ var Sprite = React.createClass({
           <div className="cont">
             <img src="image/demo.png" style={self.state.styles}/>
           </div>
-          <a className="icon icon-remove"></a>
+          <a className="icon icon-remove" onClick={this.onRemove.bind()}></a>
         </div>
       </div>
     );
