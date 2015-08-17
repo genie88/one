@@ -1,7 +1,7 @@
 /** @jsx React.DOM **/
 
 var Sprite = React.createClass({
-  id : "sprite_2459",
+  id : "elem-" + parseInt(Math.random() * 10000),
   type: "image", //optional[image, text, geometric]
   handleClick: function() {
     var  $this = $("#"+ this.id);
@@ -24,7 +24,7 @@ var Sprite = React.createClass({
       styles: {
         width: "100px",
         height: "100px",
-        background: "#9a21a5"
+        background: "#fff"
       },
       animations: [
         { p: { translateX: 100 }, o: { duration: 1000 } },
@@ -40,9 +40,24 @@ var Sprite = React.createClass({
    var self = this;
     return (
       <div id={self.id} 
-           className="elem" 
-           style={self.state.styles} 
-           onClick={this.handleClick.bind()}>
+          className="elem j_elem elem-image elem-active" 
+          style={self.state.styles}
+          data-type={this.type} 
+          onClick={this.handleClick.bind()}>
+        <div className="j_elem_main elem-main">
+          <div className="resize-hd resize-hd-corner resize-hd-tl"></div>
+          <div className="resize-hd resize-hd-corner resize-hd-tr"></div>
+          <div className="resize-hd resize-hd-corner resize-hd-bl"></div>
+          <div className="resize-hd resize-hd-corner resize-hd-br"></div>
+          <div className="resize-hd resize-hd-t"></div>
+          <div className="resize-hd resize-hd-r"></div>
+          <div className="resize-hd resize-hd-b"></div>
+          <div className="resize-hd resize-hd-l"></div>
+          <div className="cont">
+            <img src="http://p0.qhimg.com/t01c1b079125298f4d0.png" style={self.state.styles}/>
+          </div>
+          <a className="icon j_elem_remove"></a>
+        </div>
       </div>
     );
   }
