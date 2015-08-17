@@ -1,0 +1,35 @@
+html, body {width:100%;height:100%;}
+body {padding:0;margin:0;background-color:#fff;font-family:'open sans',helvetica neue,helvetica,arial,sans-serif;}
+
+/* ------------ iPhone 6 mock -------------- */
+.iphone-container {margin-top: 20px; width:100%;}
+/*Styles for Dark version*/
+.dark .phone-shape {border-color:#444;background-color:#333;box-shadow:-47px 0 0 rgba(0,0,0,0.075), 0 0 0 2px rgba(0,0,0,0.6);}
+.dark .camera, .dark .circle, .dark .speaker, .dark .circle-button {background-color:#222;}
+.dark .buttons, .dark .button.last {background-color:#333;box-shadow:-45px 0 0 rgba(0,0,0,0.075), 0 0 0 2px rgba(0,0,0,0.6);}
+/*Default Phone Color Styles - White*/
+.phone-shape {width: 295px;height: 532px;border-radius: 40px;border: 2px solid #fff;margin:0 auto;padding: 60px 10px;background-color: #f3f3f3;position: relative;box-shadow:-47px 0 0 rgba(0,0,0,0.075), 0 0 0 2px rgba(0,0,0,0.1)}
+.phone-screen {height: 522px;width: 295px;background-color: #fff;box-shadow: 0 0 0 1px rgba(0,0,0,0.1) inset;overflow: hidden;position: relative;}
+.top-details {position: absolute;left: 0;top: 17px;width: 100%;}
+.camera, .circle, .speaker {border-radius: 100px;display: block;background-color: #e1e1e1;}
+.camera {height: 7px;width: 7px;margin: auto;}
+.circle {height: 9px;width: 9px;position: absolute;left: 95px;top: 16px;}
+.speaker {height: 7px;width: 90px;margin: 10px auto 0;}
+.buttons, .button.last {width: 3px;background: #eee;position: absolute;}
+.buttons {box-shadow: -45px 0 0 rgba(0,0,0,0.075), 0 0 0 2px rgba(0,0,0,0.1);}
+.button.last {box-shadow:0 0 0 2px rgba(0,0,0,0.1);}
+.circle-button {height: 40px;width: 40px;background: #e1e1e1;margin: 17px auto;border-radius: 100px;}
+.button-one {height: 20px;left: -7px;top: 59px;border-radius: 4px 0 0 4px;}
+.button-two {height: 40px;width: 3px;left: -7px;top: 110px;border-radius: 4px 0 0 4px;}
+.button-three {height: 40px;width: 3px;left: -7px;top: 165px;border-radius: 4px 0 0 4px;}
+.button-four {height: 40px;width: 3px;right: -7px;top: 110px;border-radius: 0 4px 4px 0;}
+/* ------------// iPhone 6 mock -------------- */
+
+
+#scene {
+    width: 100%;
+    height: 100%;
+}
+.sprite {
+    position: absolute;
+}
