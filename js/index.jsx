@@ -2,6 +2,7 @@
 
 var Sprite = React.createClass({
   id : "sprite_2459",
+  type: "image", //optional[image, text, geometric]
   handleClick: function() {
     var  $this = $("#"+ this.id);
     this.goVelocity($this);
@@ -23,11 +24,11 @@ var Sprite = React.createClass({
       styles: {
         width: "100px",
         height: "100px",
-         background: "#9a21a5"
+        background: "#9a21a5"
       },
       animations: [
         { p: { translateX: 100 }, o: { duration: 1000 } },
-        { p: { top: '50%' }, o: { duration: 1000, sequenceQueue: false }},
+        { p: { top: '40%' }, o: { duration: 1000, sequenceQueue: false }},
         { p: { rotateZ: 360 }, o: { duration: 1000 }},
         { p: "custom.pulse", o: { duration: 1000 }},
         { p: "custom.flipXOut", o: { duration: 1000 }},
@@ -38,7 +39,10 @@ var Sprite = React.createClass({
   render: function() {
    var self = this;
     return (
-      <div id={self.id} className="sprite" style={self.state.styles} onClick={this.handleClick.bind()}>
+      <div id={self.id} 
+           className="elem" 
+           style={self.state.styles} 
+           onClick={this.handleClick.bind()}>
       </div>
     );
   }
