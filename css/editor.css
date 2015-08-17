@@ -1,12 +1,12 @@
 @charset "utf-8";
-	html,body {
+/*	html,body {
 	height:100%;
 	width:100%
 }
 body {
 	min-width:1000px;
 	position:relative
-}
+}*/
 hr {
 	margin:10px 0
 }
@@ -510,6 +510,19 @@ hr {
 .resize-hd-r {
 	right:-1px
 }
+
+.elem-active .resize-hd-tl, .elem-active .resize-hd-tr, 
+.elem-active .resize-hd-bl, .elem-active .resize-hd-br, 
+.elem-active .resize-hd-t, .elem-active .resize-hd-r, 
+.elem-active .resize-hd-l, .elem-active .resize-hd-b{
+	display: block;
+}
+
+.elem-active  .cont {
+	border: 1px dashed #ccc;
+}
+
+
 body .cp-color-picker,body .colpick {
 	border-radius:0;
 	z-index:1000
