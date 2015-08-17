@@ -35,5 +35,10 @@
     <script src="http://cdn.jsdelivr.net/velocity/1.2.2/velocity.ui.min.js"></script>
     <script src="js/effects.js"></script>
     <script src="js/index.jsx" type="text/jsx"></script>
+    <script type="text/javascript">
+        $('#scene').on("click", function(){
+          $('#scene').find('div.elem').removeClass("elem-active");
+        });
+    </script>
   </body>
 </html>

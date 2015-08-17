@@ -5,7 +5,9 @@ var Sprite = React.createClass({
   type: "image", //optional[image, text, geometric]
   handleClick: function() {
     var  $this = $("#"+ this.id);
+    $this.addClass("elem-active");
     this.goVelocity($this);
+    return false;
     
   },
 
@@ -24,7 +26,7 @@ var Sprite = React.createClass({
       styles: {
         width: "100px",
         height: "100px",
-        background: "#fff"
+        backgroundColor: "transparent"
       },
       animations: [
         { p: { translateX: 100 }, o: { duration: 1000 } },
@@ -40,7 +42,7 @@ var Sprite = React.createClass({
    var self = this;
     return (
       <div id={self.id} 
-          className="elem j_elem elem-image elem-active" 
+          className="elem j_elem elem-image" 
           style={self.state.styles}
           data-type={this.type} 
           onClick={this.handleClick.bind()}>
