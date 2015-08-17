@@ -6,13 +6,13 @@ var Sprite = React.createClass({
       var  $this = document.querySelector("#sprite_2459");
     var mySequence = [
           { e: $this, p: { translateX: 100 }, o: { duration: 1000 } },
-          { e: $this, p: { translateY: 200 }, o: { duration: 1000, sequenceQueue: false }},
-         { e: $this, p: { rotateZ: 360 }, o: { duration: 1000 }}
+          { e: $this, p: { top: '50%' }, o: { duration: 1000, sequenceQueue: false }},
+          { e: $this, p: { rotateZ: 360 }, o: { duration: 1000 }}
       ];
       $.Velocity.RunSequence(mySequence);
-      $($this).velocity("callout.pulse")
-                   .velocity("transition.flipXOut", { delay: 100 })
-                   .velocity("transition.flipXIn", { delay: 200 });
+      $($this).velocity("custom.pulse")
+                   .velocity("custom.flipXOut", { delay: 100 })
+                   .velocity("custom.slideUpIn", { delay: 200 });
   },
   
   getInitialState: function() {
