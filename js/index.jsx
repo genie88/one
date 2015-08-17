@@ -58,7 +58,7 @@ var Sprite = React.createClass({
           <div className="cont">
             <img src="image/demo.png" style={self.state.styles}/>
           </div>
-          <a className="icon j_elem_remove"></a>
+          <a className="icon icon-remove"></a>
         </div>
       </div>
     );

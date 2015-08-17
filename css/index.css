@@ -25,6 +25,27 @@ body {padding:0;margin:0;background-color:#fff;font-family:'open sans',helvetica
 .button-four {height: 40px;width: 3px;right: -7px;top: 110px;border-radius: 0 4px 4px 0;}
 /* ------------// iPhone 6 mock -------------- */
 
+/* -----------   common css-------------------  */
+.icon-remove {
+	/* still bad on picking color */
+    background: orange;
+    color: red;
+    /* make a round button */
+    border-radius: 12px;
+    /* center text */
+    line-height: 20px;
+    text-align: center;
+    height: 20px;
+    width: 20px;
+    font-size: 18px;
+    padding: 2px;
+}
+.icon-remove::before {
+    content: "\2716";
+    margin-top: 2px;
+    margin-left: 2px;
+}
+/* ----------- //  common css-------------------- */
 
 #scene {
     width: 100%;
