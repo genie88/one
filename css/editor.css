@@ -545,10 +545,13 @@ hr {
     z-index: 100;
     cursor: pointer;
 }
-
-.elem:hover .icon-remove, .elem-active .icon-remove{
+.elem:hover .icon-remove{
     display: block;
 }
+.elem-active .icon-remove{
+    display: none !important;
+}
+
 
 
 body .cp-color-picker,body .colpick {
