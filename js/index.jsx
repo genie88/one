@@ -6,7 +6,8 @@ var Elem = React.createClass({
   handleClick: function() {
     Messenger.broadcast('elem.selected', {id: this.id});
     var  $this = $("#"+ this.id);
-    $this.addClass("elem-active");
+    //$this.addClass("elem-active");
+    this.extendState({selected: true});
     //this.goVelocity($this);
     return false;
     
@@ -14,7 +15,7 @@ var Elem = React.createClass({
 
   onRemove: function() {
     Messenger.broadcast('elem.remove', {id: this.id});
-    alert("not implement yet");
+    //alert("not implement yet");
     
   },
 
@@ -52,8 +53,46 @@ var Elem = React.createClass({
   onMouseDown: function(evt){
     //console.log('mouse down', evt.nativeEvent);
     var e = evt.nativeEvent;
+    
     this.data.prePoints = {x: e.clientX, y: e.clientY};
-    this.data.dragStart = true;
+    
+
+    //根据当前点击位置不同，进入不同的处理分支
+    var control = $(evt.target).attr('data-controls');
+    console.log(control)
+    switch(control){
+      //左上缩放控件
+      case 'tl' : 
+        break;
+      //右上缩放控件
+      case 'tr' : 
+        break;
+      //左下缩放控件
+      case 'bl' : 
+        break;
+      //右下缩放控件
+      case 'br' : 
+        break;
+      //顶部缩放控件
+      case 't' : 
+        break;
+      //右缩放控件
+      case 'r' : 
+        break;
+      //底部缩放控件
+      case 'b' : 
+        break;
+      //左缩放控件
+      case 'l' : 
+        break;
+      //删除组件按钮
+      case 'x':
+        break;
+      default : 
+
+        this.data.dragStart = true;
+        break;
+    }
     //console.log(this.data.prePoints);
   },
   onMouseMove: function(evt){
@@ -92,21 +131,67 @@ var Elem = React.createClass({
       
 
     //console.log(this.data.prePoints);
-
-
     this.data.prePoints = currPoints;
     return false;
 
     //console.log('mouse move', evt.nativeEvent);
   },
   onMouseUp: function(evt){
-    var e = evt.nativeEvent,
-        currPoints = {x: e.clientX, y: e.clientY};
-        
-    this.data.moving = false;
-    this.data.dragStart = false;
-    //触发元素拖动结束事件
-    this.onDragBegin({data: currPoints});
+
+    //console.log(this.data.moving);
+    //根据当前点击位置不同，进入不同的处理分支
+    var control = $(evt.target).attr('data-controls');
+    switch(control){
+      //左上缩放控件
+      case 'tl' : 
+        break;
+      //右上缩放控件
+      case 'tr' : 
+        break;
+      //左下缩放控件
+      case 'bl' : 
+        break;
+      //右下缩放控件
+      case 'br' : 
+        break;
+      //顶部缩放控件
+      case 't' : 
+        break;
+      //右缩放控件
+      case 'r' : 
+        break;
+      //底部缩放控件
+      case 'b' : 
+        break;
+      //左缩放控件
+      case 'l' : 
+        break;
+      //删除组件按钮
+      case 'x':
+        //不处理
+        return true;
+        break;
+      //组件主体部分
+      default : 
+        //如果有拖动，视为拖动事件
+        if (this.data.moving) {
+          var e = evt.nativeEvent,
+          currPoints = {x: e.clientX, y: e.clientY};
+
+          this.data.moving = false;
+          this.data.dragStart = false;
+          //触发元素拖动结束事件
+          this.onDragBegin({data: currPoints});
+          return false;
+        } 
+        //如果无拖动，视为点击事件
+        else {
+          this.handleClick({data: currPoints});
+          return false;
+        }
+        break;
+    }
+    
         
     //console.log('mouse up', evt.nativeEvent);
   },
@@ -129,6 +214,7 @@ var Elem = React.createClass({
   
   getInitialState: function() {
     return {
+      selected: false,
       heroimg: 'http://placebabies.com/500/500/1',
       styles: {
         top: "0px",
@@ -149,9 +235,10 @@ var Elem = React.createClass({
   },
   render: function() {
    var self = this;
+    _className = "elem " + (this.state.selected? " elem-active ": " ") + (" elem-" + this.type)
     return (
       <div id={self.id} 
-          className="elem j_elem elem-image" 
+          className= {_className}
           style={self.state.styles}
           data-type={this.type}>
         <div 
@@ -159,18 +246,18 @@ var Elem = React.createClass({
             onMouseMove={this.onMouseMove}
             onMouseUp={this.onMouseUp}
             onMouseDown={this.onMouseDown}>
-          <div className="resize-hd resize-hd-corner resize-hd-tl"></div>
-          <div className="resize-hd resize-hd-corner resize-hd-tr"></div>
-          <div className="resize-hd resize-hd-corner resize-hd-bl"></div>
-          <div className="resize-hd resize-hd-corner resize-hd-br"></div>
-          <div className="resize-hd resize-hd-t"></div>
-          <div className="resize-hd resize-hd-r"></div>
-          <div className="resize-hd resize-hd-b"></div>
-          <div className="resize-hd resize-hd-l"></div>
-          <div className="cont" onClick={this.handleClick.bind()}>
+          <div className="resize-hd resize-hd-corner resize-hd-tl" data-controls="tl"></div>
+          <div className="resize-hd resize-hd-corner resize-hd-tr" data-controls="tr"></div>
+          <div className="resize-hd resize-hd-corner resize-hd-bl" data-controls="bl"></div>
+          <div className="resize-hd resize-hd-corner resize-hd-br" data-controls="br"></div>
+          <div className="resize-hd resize-hd-t" data-controls="t"></div>
+          <div className="resize-hd resize-hd-r" data-controls="r"></div>
+          <div className="resize-hd resize-hd-b" data-controls="b"></div>
+          <div className="resize-hd resize-hd-l" data-controls="l"></div>
+          <div className="cont">
             <img src="image/demo.png" style={self.state.styles}/>
           </div>
-          <a className="icon icon-remove" onClick={this.onRemove.bind()}></a>
+          <a className="icon icon-remove" data-controls="x" onClick={this.onRemove.bind()}></a>
         </div>
       </div>
     );
