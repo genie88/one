@@ -7,8 +7,9 @@ var Elem = React.createClass({
     Messenger.broadcast('elem.selected', {id: this.id});
     var  $this = $("#"+ this.id);
     //$this.addClass("elem-active");
-    this.extendState({selected: true});
-    //this.goVelocity($this);
+    selected = !this.state.selected;
+    this.extendState({selected: selected});
+    this.goVelocity($this);
     return false;
     
   },
@@ -44,12 +45,22 @@ var Elem = React.createClass({
   },
 
 
-  //original mouse event handler
+  
   data: {
+      //drag flags
       moving: false,
       dragStart: false,
+
+      //resize flags
+      resizeStart: false,
+      resizing: false,
+
       prePoints: {x:0 , y:0}
   },
+
+  //===================================================//
+  //            Original Mouse Event Handler           //
+  //===================================================//
   onMouseDown: function(evt){
     //console.log('mouse down', evt.nativeEvent);
     var e = evt.nativeEvent;
@@ -63,33 +74,27 @@ var Elem = React.createClass({
     switch(control){
       //左上缩放控件
       case 'tl' : 
-        break;
       //右上缩放控件
       case 'tr' : 
-        break;
       //左下缩放控件
       case 'bl' : 
-        break;
       //右下缩放控件
       case 'br' : 
-        break;
       //顶部缩放控件
       case 't' : 
-        break;
       //右缩放控件
       case 'r' : 
-        break;
       //底部缩放控件
       case 'b' : 
-        break;
       //左缩放控件
-      case 'l' : 
+      case 'l' :
+        console.log('resize start ...');
+        this.data.resizeStart = true;
         break;
       //删除组件按钮
       case 'x':
         break;
       default : 
-
         this.data.dragStart = true;
         break;
     }
@@ -128,11 +133,36 @@ var Elem = React.createClass({
           }
         });
       }
+
+      //标记为缩放操作开始
+      if ( !!this.data.resizeStart ) {
+        //触发元素缩放开始事件
+        this.onResizeBegin({data: this.data.prePoints});
+        this.data.resizeStart = true;
+        this.data.resizing = true;
+      } 
+
+      if( !!this.data.resizing) {
+        //触发元素缩放事件
+        this.onResize({data: currPoints});
+
+        //缩放元素
+        var width = parseInt(this.state.styles.width),
+            height= parseInt(this.state.styles.height);
+        width += offset.y;
+        height += offset.x;
+        this.extendState({
+          styles: {
+            width: width + 'px',
+            height: height +'px'
+          }
+        });
+      }
       
 
     //console.log(this.data.prePoints);
     this.data.prePoints = currPoints;
-    return false;
+    //return false;
 
     //console.log('mouse move', evt.nativeEvent);
   },
@@ -186,8 +216,8 @@ var Elem = React.createClass({
         } 
         //如果无拖动，视为点击事件
         else {
-          this.handleClick({data: currPoints});
-          return false;
+          //this.handleClick({data: currPoints});
+          //return false;
         }
         break;
     }
@@ -243,9 +273,12 @@ var Elem = React.createClass({
           data-type={this.type}>
         <div 
             className="j_elem_main elem-main" 
+            onClick= {this.handleClick}
             onMouseMove={this.onMouseMove}
-            onMouseUp={this.onMouseUp}
-            onMouseDown={this.onMouseDown}>
+            onDragStart= {function(){return false;}}
+            //onMouseUp={this.onMouseUp}
+            //onMouseDown={this.onMouseDown}
+          >
           <div className="resize-hd resize-hd-corner resize-hd-tl" data-controls="tl"></div>
           <div className="resize-hd resize-hd-corner resize-hd-tr" data-controls="tr"></div>
           <div className="resize-hd resize-hd-corner resize-hd-bl" data-controls="bl"></div>
