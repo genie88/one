@@ -28,7 +28,7 @@ var Scene = React.createClass({
   //注册广播消息监听
   addListenners: function (){
     //监听来自Scene组件的以下事件
-    //Messenger.add('elem.drag.start', this.props.id, this.onElemDragStart);
+    //Messenger.add('elem.remove', this.props.id, this.onElemRemove);
     //Messenger.add('elem.resize.start', this.props.id, this.onElemResizeStart);
   },
 
