@@ -135,7 +135,15 @@ var Scene = React.createClass({
   },
 
   render: function() {
-   var self = this;
+    var self = this;
+
+    //读取属性上的elems对象数组，然后进行渲染
+    var elems = this.props.elems.map(function(elem){
+      return (
+        <Elem type={elem.type} id={elem.id}></Elem>
+      );
+    });
+
     return (
       <div id={self.id} 
           className= "scene active"
@@ -145,10 +153,8 @@ var Scene = React.createClass({
           onDragStart= {function(){return false;}}
           onMouseUp={this.onMouseUp}
           onMouseDown={this.onMouseDown}>
-        hello, scene!
+        {elems}
       </div>
     );
   }
 });
-
-React.render(React.createElement(Scene), document.getElementById('scene')); 

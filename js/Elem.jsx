@@ -1,11 +1,22 @@
 /** @jsx React.DOM **/
 
+/**
+ * 
+  OnePage 基础动画组件定义
+
+  组件属性定义
+  props: {
+    id  : 组件的唯一id，以"elem-"开头
+    type: 组件的类型，为[image, text, geometric]几种可选之
+   } 
+ *
+ **/
 var Elem = React.createClass({
-  id : "elem-" + parseInt(Math.random() * 10000),
-  type: "image", //optional[image, text, geometric]
+
+
   handleClick: function() {
-    Messenger.broadcast('elem.selected', {id: this.id});
-    var  $this = $("#"+ this.id);
+    Messenger.broadcast('elem.selected', {id: this.props.id});
+    var  $this = $("#"+ this.props.id);
     //$this.addClass("elem-active");
     selected = !this.state.selected;
     this.extendState({selected: selected});
@@ -15,33 +26,33 @@ var Elem = React.createClass({
   },
 
   onRemove: function() {
-    Messenger.broadcast('elem.remove', {id: this.id});
+    Messenger.broadcast('elem.remove', {id: this.props.id});
     //alert("not implement yet");
     
   },
 
   onDragBegin: function(){
-    Messenger.broadcast('elem.drag.begin', {id: this.id});
+    Messenger.broadcast('elem.drag.begin', {id: this.props.id});
   },
 
   onDrag: function(){
-    Messenger.broadcast('elem.drag', {id: this.id});
+    Messenger.broadcast('elem.drag', {id: this.props.id});
   },
 
   onDragEnd: function(){
-    Messenger.broadcast('elem.drag.end', {id: this.id});
+    Messenger.broadcast('elem.drag.end', {id: this.props.id});
   },
 
   onResizeBegin: function(){
-    Messenger.broadcast('elem.resize.begin', {id: this.id});
+    Messenger.broadcast('elem.resize.begin', {id: this.props.id});
   },
 
   onResizeEnd: function(){
-    Messenger.broadcast('elem.resize', {id: this.id});
+    Messenger.broadcast('elem.resize', {id: this.props.id});
   },
 
   onResize: function(){
-    Messenger.broadcast('elem.resize.end', {id: this.id});
+    Messenger.broadcast('elem.resize.end', {id: this.props.id});
   },
 
 
@@ -265,12 +276,12 @@ var Elem = React.createClass({
   },
   render: function() {
    var self = this;
-    _className = "elem " + (this.state.selected? " elem-active ": " ") + (" elem-" + this.type)
+    _className = "elem " + (this.state.selected? " elem-active ": " ") + (" elem-" + this.props.type)
     return (
-      <div id={self.id} 
+      <div id={self.props.id} 
           className= {_className}
           style={self.state.styles}
-          data-type={this.type}>
+          data-type={this.props.type}>
         <div 
             className="j_elem_main elem-main" 
             onClick= {this.handleClick}
