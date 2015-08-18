@@ -25,6 +25,13 @@ var Scene = React.createClass({
     Messenger.broadcast('scene.remove', {id: this.id});
   },
 
+  //注册广播消息监听
+  addListenners: function (){
+    //监听来自Scene组件的以下事件
+    //Messenger.add('elem.drag.start', this.props.id, this.onElemDragStart);
+    //Messenger.add('elem.resize.start', this.props.id, this.onElemResizeStart);
+  },
+
   data: {
       //drag flags
       moving: false,
@@ -47,65 +54,19 @@ var Scene = React.createClass({
     this.extendState({selected: selected});
     this.goVelocity($this);
     return false;
-    
   },
   onMouseDown: function(evt){
-    var e = evt.nativeEvent;
-    
-    this.data.prePoints = {x: e.clientX, y: e.clientY};
-    this.data.resizeStart = true;
-    this.data.dragStart = true;
+    Messenger.broadcast('scene.mouse.down', evt);
+    return false;
   },
   onMouseMove: function(evt){
-    var e = evt.nativeEvent,
-        currPoints = {x: e.clientX, y: e.clientY},
-        prePoints = this.data.prePoints;
-        offset = { 
-          x: currPoints.x - prePoints.x ,
-          y: currPoints.y - prePoints.y ,
-        };
-
-      //标记为拖动开始
-      if ( !!this.data.dragStart ) {
-        //触发元素拖动开始事件
-        //this.onDragBegin({data: this.data.prePoints});
-        this.data.dragStart = true;
-        this.data.moving = true;
-      } 
-      if( !!this.data.moving) {
-        //触发元素拖动事件
-        //this.onDrag({data: currPoints});
-      }
-
-      //标记为缩放操作开始
-      if ( !!this.data.resizeStart ) {
-        //触发元素缩放开始事件
-        //this.onResizeBegin({data: this.data.prePoints});
-        this.data.resizeStart = true;
-        this.data.resizing = true;
-      } 
-      if( !!this.data.resizing) {
-        //触发元素缩放事件
-        //this.onResize({data: currPoints});
-      }
-  
-    this.data.prePoints = currPoints;
+    Messenger.broadcast('scene.mouse.move', evt);
     return false;
   },
   onMouseUp: function(evt){
-    //如果有拖动，视为拖动事件
-    if (this.data.moving) {
-      var e = evt.nativeEvent,
-      currPoints = {x: e.clientX, y: e.clientY};
-
-      this.data.moving = false;
-      this.data.dragStart = false;
-      //触发元素拖动结束事件
-      //this.onDragBegin({data: currPoints});
-      return false;
-    } 
+    Messenger.broadcast('scene.mouse.up', evt);
+    return false; 
   },
-
 
   //扩展this.state
   extendState: function (state) {
@@ -116,6 +77,11 @@ var Scene = React.createClass({
   // 运行当前页面上所有元素的动画
   goVelocity: function(handler) {
 
+  },
+
+  componentDidMount: function(){
+    //注册广播消息监听
+    this.addListenners();
   },
   
   getInitialState: function() {

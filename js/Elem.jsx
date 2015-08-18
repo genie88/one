@@ -20,7 +20,7 @@ var Elem = React.createClass({
     //$this.addClass("elem-active");
     selected = !this.state.selected;
     this.extendState({selected: selected});
-    this.goVelocity($this);
+    //this.goVelocity($this);
     return false;
     
   },
@@ -31,33 +31,42 @@ var Elem = React.createClass({
     
   },
 
-  onDragBegin: function(){
-    Messenger.broadcast('elem.drag.begin', {id: this.props.id});
+  onDragStart: function(){
+    //发送消息给Scene组件
+    Messenger.broadcast('elem.drag.start', {id: this.props.id});
   },
 
   onDrag: function(){
-    Messenger.broadcast('elem.drag', {id: this.props.id});
+    //Messenger.broadcast('elem.drag.dragging', {id: this.props.id});
   },
 
   onDragEnd: function(){
-    Messenger.broadcast('elem.drag.end', {id: this.props.id});
+    //Messenger.broadcast('elem.drag.end', {id: this.props.id});
   },
 
-  onResizeBegin: function(){
-    Messenger.broadcast('elem.resize.begin', {id: this.props.id});
+  onResizeStart: function(){
+    //发送消息给Scene组件
+    Messenger.broadcast('elem.resize.start', {id: this.props.id});
   },
 
   onResizeEnd: function(){
-    Messenger.broadcast('elem.resize', {id: this.props.id});
+    //Messenger.broadcast('elem.resize.resizing', {id: this.props.id});
   },
 
   onResize: function(){
-    Messenger.broadcast('elem.resize.end', {id: this.props.id});
+    //Messenger.broadcast('elem.resize.end', {id: this.props.id});
+  },
+
+  addListenners: function (){
+    //监听来自Scene组件的以下事件
+    Messenger.add('scene.mouse.move', this.props.id, this.onMouseMove);
+    Messenger.add('scene.mouse.up', this.props.id, this.onMouseUp);
   },
 
 
-  
+  //全局标志位与数据存储
   data: {
+      control: null,
       //drag flags
       moving: false,
       dragStart: false,
@@ -69,20 +78,24 @@ var Elem = React.createClass({
       prePoints: {x:0 , y:0}
   },
 
+  cancelResizeAndDrag: function(){
+    this.data.resizing = false;
+    this.data.resizeStart = false;
+    this.data.moving = false;
+    this.data.dragStart = false;
+  },
+
   //===================================================//
   //            Original Mouse Event Handler           //
   //===================================================//
   onMouseDown: function(evt){
     //console.log('mouse down', evt.nativeEvent);
     var e = evt.nativeEvent;
-    
     this.data.prePoints = {x: e.clientX, y: e.clientY};
-    
+    this.data.control = $(evt.target).attr('data-controls');
 
     //根据当前点击位置不同，进入不同的处理分支
-    var control = $(evt.target).attr('data-controls');
-    console.log(control)
-    switch(control){
+    switch(this.data.control){
       //左上缩放控件
       case 'tl' : 
       //右上缩放控件
@@ -99,7 +112,6 @@ var Elem = React.createClass({
       case 'b' : 
       //左缩放控件
       case 'l' :
-        console.log('resize start ...');
         this.data.resizeStart = true;
         break;
       //删除组件按钮
@@ -123,7 +135,7 @@ var Elem = React.createClass({
       //标记为拖动开始
       if ( !!this.data.dragStart ) {
         //触发元素拖动开始事件
-        this.onDragBegin({data: this.data.prePoints});
+        this.onDragStart({data: this.data.prePoints});
         this.data.dragStart = true;
         this.data.moving = true;
       } 
@@ -148,7 +160,7 @@ var Elem = React.createClass({
       //标记为缩放操作开始
       if ( !!this.data.resizeStart ) {
         //触发元素缩放开始事件
-        this.onResizeBegin({data: this.data.prePoints});
+        this.onResizeStart({data: this.data.prePoints});
         this.data.resizeStart = true;
         this.data.resizing = true;
       } 
@@ -160,8 +172,8 @@ var Elem = React.createClass({
         //缩放元素
         var width = parseInt(this.state.styles.width),
             height= parseInt(this.state.styles.height);
-        width += offset.y;
-        height += offset.x;
+        width += offset.x;
+        height += offset.y;
         this.extendState({
           styles: {
             width: width + 'px',
@@ -178,34 +190,35 @@ var Elem = React.createClass({
     //console.log('mouse move', evt.nativeEvent);
   },
   onMouseUp: function(evt){
+    var e = evt.nativeEvent,
+        currPoints = {x: e.clientX, y: e.clientY};
 
-    //console.log(this.data.moving);
-    //根据当前点击位置不同，进入不同的处理分支
-    var control = $(evt.target).attr('data-controls');
-    switch(control){
+    this.cancelResizeAndDrag();
+
+    //根据当前控件不同，进入不同的处理分支
+    switch(this.data.control){
       //左上缩放控件
       case 'tl' : 
-        break;
       //右上缩放控件
       case 'tr' : 
-        break;
       //左下缩放控件
       case 'bl' : 
-        break;
       //右下缩放控件
       case 'br' : 
-        break;
       //顶部缩放控件
       case 't' : 
-        break;
       //右缩放控件
       case 'r' : 
-        break;
       //底部缩放控件
       case 'b' : 
-        break;
       //左缩放控件
-      case 'l' : 
+      case 'l' :
+        if (!!this.data.resizing) { 
+          //触发元素缩放结束事件
+          this.onResizeEnd({data: currPoints});
+          console.log('resize end');
+        } 
+        return false;
         break;
       //删除组件按钮
       case 'x':
@@ -215,26 +228,14 @@ var Elem = React.createClass({
       //组件主体部分
       default : 
         //如果有拖动，视为拖动事件
-        if (this.data.moving) {
-          var e = evt.nativeEvent,
-          currPoints = {x: e.clientX, y: e.clientY};
-
-          this.data.moving = false;
-          this.data.dragStart = false;
+        if (!!this.data.moving) {
           //触发元素拖动结束事件
-          this.onDragBegin({data: currPoints});
-          return false;
+          console.log('drag end');
+          this.onDragEnd({data: currPoints});
         } 
-        //如果无拖动，视为点击事件
-        else {
-          //this.handleClick({data: currPoints});
-          //return false;
-        }
+        return false;
         break;
     }
-    
-        
-    //console.log('mouse up', evt.nativeEvent);
   },
 
 
@@ -251,6 +252,18 @@ var Elem = React.createClass({
       animation.e = handler;
     });
     $.Velocity.RunSequence(this.state.animations);
+  },
+
+  /**
+   * 组件的生命周期分成三个状态：
+   *   Mounting：已插入真实 DOM
+   *   Updating：正在被重新渲染
+   *   Unmounting：已移出真实 DOM
+   **/
+  componentDidMount: function(){
+    //注册广播消息监听
+    this.addListenners();
+    console.log('broadcast news is listening ...');
   },
   
   getInitialState: function() {
@@ -274,6 +287,7 @@ var Elem = React.createClass({
       ]
     }
   },
+
   render: function() {
    var self = this;
     _className = "elem " + (this.state.selected? " elem-active ": " ") + (" elem-" + this.props.type)
@@ -283,12 +297,11 @@ var Elem = React.createClass({
           style={self.state.styles}
           data-type={this.props.type}>
         <div 
-            className="j_elem_main elem-main" 
-            onClick= {this.handleClick}
-            onMouseMove={this.onMouseMove}
-            onDragStart= {function(){return false;}}
+            className="j_elem_main elem-main"
+            onMouseDown={this.onMouseDown}
+            //onMouseMove={this.onMouseMove}
             //onMouseUp={this.onMouseUp}
-            //onMouseDown={this.onMouseDown}
+            onDragStart= {function(){return false;}}
           >
           <div className="resize-hd resize-hd-corner resize-hd-tl" data-controls="tl"></div>
           <div className="resize-hd resize-hd-corner resize-hd-tr" data-controls="tr"></div>
@@ -298,7 +311,7 @@ var Elem = React.createClass({
           <div className="resize-hd resize-hd-r" data-controls="r"></div>
           <div className="resize-hd resize-hd-b" data-controls="b"></div>
           <div className="resize-hd resize-hd-l" data-controls="l"></div>
-          <div className="cont">
+          <div className="cont" onClick= {this.handleClick}>
             <img src="image/demo.png" style={self.state.styles}/>
           </div>
           <a className="icon icon-remove" data-controls="x" onClick={this.onRemove.bind()}></a>
