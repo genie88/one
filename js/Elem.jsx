@@ -161,16 +161,94 @@ var Elem = React.createClass({
         this.onResize({data: currPoints});
 
         //缩放元素
-        var width = parseInt(this.state.styles.width),
-            height= parseInt(this.state.styles.height);
-        width += offset.x;
-        height += offset.y;
-        this.extendState({
-          styles: {
-            width: width + 'px',
-            height: height +'px'
-          }
-        });
+        var style = {},
+            width = parseInt(this.state.styles.width),
+            height= parseInt(this.state.styles.height),
+            top = parseInt(this.state.styles.top),
+            left= parseInt(this.state.styles.left);
+
+        //根据当前点击位置不同，进入不同的处理分支
+        switch(this.state.data.control){
+          //左上缩放控件
+          case 'tl' : 
+            height -= offset.y; //offset.y为负值
+            top += offset.y;
+            width -= offset.x; //offset.x为负值
+            left += offset.x;
+            style = {
+              top: top + 'px',
+              left: left + 'px',
+              width: width +'px',
+              height: height +'px'
+            };
+            break;
+          //右上缩放控件
+          case 'tr' : 
+            height -= offset.y; //offset.y为负值
+            top += offset.y;
+            width += offset.x;
+            style = {
+              top: top + 'px',
+              width: width + 'px',
+              height: height +'px'
+            };
+            break;
+          //左下缩放控件
+          case 'bl' : 
+            width -= offset.x;
+            height += offset.y;
+            left += offset.x;
+            style = {
+              left: left + 'px',
+              width: width + 'px',
+              height: height +'px'
+            };
+            break;
+          //右下缩放控件
+          case 'br' : 
+            width += offset.x;
+            height += offset.y;
+            style = {
+              width: width + 'px',
+              height: height +'px'
+            };
+            break;
+          //顶部缩放控件
+          case 't' : 
+            height -= offset.y; //offset.y为负值
+            top += offset.y;
+            style = {
+              top: top + 'px',
+              height: height +'px'
+            };
+            break;
+          //右缩放控件
+          case 'r' :
+            width += offset.x;
+            style = { width: width + 'px' };
+            break; 
+          //底部缩放控件
+          case 'b' : 
+            height += offset.y;
+            style = { height: height +'px' };
+            break;
+          //左缩放控件
+          case 'l' :
+            width -= offset.x; //offset.x为负值
+            left += offset.x;
+            style = {
+              left: left + 'px',
+              width: width +'px'
+            };
+            break;
+          //删除组件按钮
+          case 'x':
+            break;
+          default : 
+            break;
+        } // End of Switch
+
+        this.extendState({ styles: style});
       }
 
     this.extendState({data: { prePoints: currPoints}});
