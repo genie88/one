@@ -296,5 +296,3 @@ var Elem = React.createClass({
     );
   }
 });
-
-React.renderComponent(<Elem />, document.getElementById('scene')); 

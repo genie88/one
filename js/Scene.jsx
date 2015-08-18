@@ -151,4 +151,4 @@ var Scene = React.createClass({
   }
 });
 
-React.renderComponent(<Scene />, document.getElementById('scene')); 
+React.render(React.createElement(Scene), document.getElementById('scene')); 
