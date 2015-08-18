@@ -518,6 +518,15 @@ hr {
 	display: block;
 }
 
+.resize-hd-tl:hover{cursor: nw-resize;} 
+.resize-hd-tr:hover{cursor: ne-resize;} 
+.resize-hd-bl:hover{cursor: sw-resize;}
+.resize-hd-br:hover{cursor: se-resize;}
+.resize-hd-t:hover{cursor: n-resize;}
+.resize-hd-r:hover{cursor: e-resize;}
+.resize-hd-l:hover{cursor: w-resize;}
+.resize-hd-b:hover{cursor: s-resize;}
+
 .elem .cont {
 	border: 1px dashed transparent;
 	background-clip: padding-box;
@@ -529,7 +538,8 @@ hr {
 	width:100%;
 	word-break:break-all;
 	word-wrap:break-word;
-	z-index:99
+	z-index:99;
+	cursor: move;
 }
 .elem-active  .cont, .elem:hover .cont{
 	border: 1px dashed #ccc;
