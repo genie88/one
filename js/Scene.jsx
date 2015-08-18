@@ -32,18 +32,6 @@ var Scene = React.createClass({
     //Messenger.add('elem.resize.start', this.props.id, this.onElemResizeStart);
   },
 
-  data: {
-      //drag flags
-      moving: false,
-      dragStart: false,
-
-      //resize flags
-      resizeStart: false,
-      resizing: false,
-
-      prePoints: {x:0 , y:0}
-  },
-
   //===================================================//
   //            Original Mouse Event Handler           //
   //===================================================//

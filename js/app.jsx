@@ -1,13 +1,16 @@
 var App = React.createClass({
   getInitialState: function() {
     return {
-      elems: [{
+    elems: [{
   		id: "001",
   		type: 'image'
 	  },{
   		id: "002",
   		type: 'text'
-	  }]
+	  },{
+      id: "003",
+      type: 'text'
+    }]
     }
   },
 

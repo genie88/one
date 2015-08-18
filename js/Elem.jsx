@@ -63,39 +63,33 @@ var Elem = React.createClass({
     Messenger.add('scene.mouse.up', this.props.id, this.onMouseUp);
   },
 
-
-  //全局标志位与数据存储
-  data: {
-      control: null,
-      //drag flags
-      moving: false,
-      dragStart: false,
-
-      //resize flags
-      resizeStart: false,
-      resizing: false,
-
-      prePoints: {x:0 , y:0}
-  },
-
+  //取消拖动或缩放的状态变量
   cancelResizeAndDrag: function(){
-    this.data.resizing = false;
-    this.data.resizeStart = false;
-    this.data.moving = false;
-    this.data.dragStart = false;
+    this.extendState({
+      data: {
+        resizing: false,
+        resizeStart: false,
+        moving:false,
+        dragStart:false,
+        control: 'dummy'
+      }
+    });
   },
 
   //===================================================//
   //            Original Mouse Event Handler           //
   //===================================================//
   onMouseDown: function(evt){
-    //console.log('mouse down', evt.nativeEvent);
     var e = evt.nativeEvent;
-    this.data.prePoints = {x: e.clientX, y: e.clientY};
-    this.data.control = $(evt.target).attr('data-controls');
+    this.extendState({
+      data: {
+        prePoints: {x: e.clientX, y: e.clientY},
+        control: $(evt.target).attr('data-controls')
+      }
+    })
 
     //根据当前点击位置不同，进入不同的处理分支
-    switch(this.data.control){
+    switch(this.state.data.control){
       //左上缩放控件
       case 'tl' : 
       //右上缩放控件
@@ -112,35 +106,33 @@ var Elem = React.createClass({
       case 'b' : 
       //左缩放控件
       case 'l' :
-        this.data.resizeStart = true;
+        this.extendState({data: { resizeStart: true }});
         break;
       //删除组件按钮
       case 'x':
         break;
       default : 
-        this.data.dragStart = true;
+        this.extendState({data: { dragStart: true }});
         break;
     }
-    //console.log(this.data.prePoints);
   },
   onMouseMove: function(evt){
     var e = evt.nativeEvent,
         currPoints = {x: e.clientX, y: e.clientY},
-        prePoints = this.data.prePoints;
+        prePoints = this.state.data.prePoints;
         offset = { 
           x: currPoints.x - prePoints.x ,
           y: currPoints.y - prePoints.y ,
         };
 
       //标记为拖动开始
-      if ( !!this.data.dragStart ) {
+      if ( !!this.state.data.dragStart ) {
         //触发元素拖动开始事件
-        this.onDragStart({data: this.data.prePoints});
-        this.data.dragStart = true;
-        this.data.moving = true;
+        this.onDragStart({data: this.state.data.prePoints});
+        this.extendState({data: { dragStart: true, moving: true }});
       } 
 
-      if( !!this.data.moving) {
+      if( !!this.state.data.moving) {
         //触发元素拖动事件
         this.onDrag({data: currPoints});
 
@@ -158,14 +150,13 @@ var Elem = React.createClass({
       }
 
       //标记为缩放操作开始
-      if ( !!this.data.resizeStart ) {
+      if ( !!this.state.data.resizeStart ) {
         //触发元素缩放开始事件
-        this.onResizeStart({data: this.data.prePoints});
-        this.data.resizeStart = true;
-        this.data.resizing = true;
+        this.onResizeStart({data: this.state.data.prePoints});
+        this.extendState({data: { resizeStart: true, resizing: true }});
       } 
-
-      if( !!this.data.resizing) {
+     
+      if( !!this.state.data.resizing) {
         //触发元素缩放事件
         this.onResize({data: currPoints});
 
@@ -181,22 +172,15 @@ var Elem = React.createClass({
           }
         });
       }
-      
 
-    //console.log(this.data.prePoints);
-    this.data.prePoints = currPoints;
-    //return false;
-
-    //console.log('mouse move', evt.nativeEvent);
+    this.extendState({data: { prePoints: currPoints}});
   },
   onMouseUp: function(evt){
     var e = evt.nativeEvent,
         currPoints = {x: e.clientX, y: e.clientY};
 
-    this.cancelResizeAndDrag();
-
     //根据当前控件不同，进入不同的处理分支
-    switch(this.data.control){
+    switch(this.state.data.control){
       //左上缩放控件
       case 'tl' : 
       //右上缩放控件
@@ -213,12 +197,11 @@ var Elem = React.createClass({
       case 'b' : 
       //左缩放控件
       case 'l' :
-        if (!!this.data.resizing) { 
+        if (!!this.state.data.resizing) { 
           //触发元素缩放结束事件
           this.onResizeEnd({data: currPoints});
           console.log('resize end');
         } 
-        return false;
         break;
       //删除组件按钮
       case 'x':
@@ -228,14 +211,16 @@ var Elem = React.createClass({
       //组件主体部分
       default : 
         //如果有拖动，视为拖动事件
-        if (!!this.data.moving) {
+        if (!!this.state.data.moving) {
           //触发元素拖动结束事件
           console.log('drag end');
           this.onDragEnd({data: currPoints});
         } 
-        return false;
         break;
     }
+
+    this.cancelResizeAndDrag();
+    return false;
   },
 
 
@@ -284,7 +269,18 @@ var Elem = React.createClass({
         { p: "custom.pulse", o: { duration: 1000 }},
         { p: "custom.flipXOut", o: { duration: 1000 }},
         { p: "custom.slideUpIn", o: { duration: 1000 }}
-      ]
+      ],
+      //全局标志位与数据存储
+      data: {
+        control: null,
+        //drag flags
+        moving: false,
+        dragStart: false,
+        //resize flags
+        resizeStart: false,
+        resizing: false,
+        prePoints: {x:0 , y:0}
+      }
     }
   },
 
