@@ -365,6 +365,20 @@ var Elem = React.createClass({
   render: function() {
    var self = this;
     _className = "elem " + (this.state.selected? " elem-active ": " ") + (" elem-" + this.props.type)
+    _content = "" ;
+
+    //内容区显示元素
+    switch(self.props.type){
+      case 'image':
+        _content = (<img src={self.props.content} style={self.state.styles}/>) ;
+        break;
+      case 'text':
+        _content = self.props.content ;
+        break;
+      default:
+        break;
+    }
+
     return (
       <div id={self.props.id} 
           className= {_className}
@@ -386,7 +400,7 @@ var Elem = React.createClass({
           <div className="resize-hd resize-hd-b" data-controls="b"></div>
           <div className="resize-hd resize-hd-l" data-controls="l"></div>
           <div className="cont" onClick= {this.handleClick}>
-            <img src="image/demo.png" style={self.state.styles}/>
+            {_content}
           </div>
           <a className="icon icon-remove" data-controls="x" onClick={this.onRemove.bind()}></a>
         </div>

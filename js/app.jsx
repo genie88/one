@@ -3,13 +3,16 @@ var App = React.createClass({
     return {
     elems: [{
   		id: "001",
-  		type: 'image'
+  		type: 'image',
+      content: 'image/demo.png'
 	  },{
   		id: "002",
-  		type: 'text'
+  		type: 'text',
+      content: '你好， 世界'
 	  },{
       id: "003",
-      type: 'text'
+      type: 'text',
+      content: 'Hello, World'
     }]
     }
   },
