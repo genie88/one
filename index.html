@@ -36,18 +36,11 @@
     <script src="js/lib/velocity.ui.min.js"></script>
     <script src="js/effects.js"></script>
     <script src="js/messenger.js"></script>
-    <script src="js/index.jsx" type="text/jsx"></script>
+    <script src="js/Elem.jsx" type="text/jsx"></script>
+    <script src="js/Scene.jsx" type="text/jsx"></script>
     <script type="text/javascript">
         //cancel warning log
         console.warn = function (){};
-        $('#scene').on("click", function(event){
-            //console.log(event.target);
-            if($(event.target).attr("id") == "scene") {
-                //console.log("scene");
-                //$('#scene').find('div.elem').removeClass("elem-active");
-            }
-          
-        });
     </script>
   </body>
 </html>
