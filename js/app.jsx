@@ -4,15 +4,39 @@ var App = React.createClass({
     elems: [{
   		id: "001",
   		type: 'image',
-      content: 'image/demo.png'
+      content: 'image/demo.png',
+      animations: [
+        { p: { translateX: 100 }, o: { duration: 1000 } },
+        { p: { top: '40%' }, o: { duration: 1000, sequenceQueue: false }},
+        { p: { rotateZ: 360 }, o: { duration: 1000 }},
+        { p: "custom.pulse", o: { duration: 1000 }},
+        { p: "custom.flipXOut", o: { duration: 1000 }},
+        { p: "custom.slideUpIn", o: { duration: 1000 }}
+      ]
 	  },{
   		id: "002",
   		type: 'text',
-      content: '你好， 世界'
+      content: '你好， 世界',
+      animations: [
+        { p: { translateX: 100 }, o: { duration: 1000 } },
+        { p: { top: '40%' }, o: { duration: 1000, sequenceQueue: false }},
+        { p: { rotateZ: 360 }, o: { duration: 1000 }},
+        { p: "custom.pulse", o: { duration: 1000 }},
+        { p: "custom.flipXOut", o: { duration: 1000 }},
+        { p: "custom.slideUpIn", o: { duration: 1000 }}
+      ]
 	  },{
       id: "003",
       type: 'text',
-      content: 'Hello, World'
+      content: 'Hello, World',
+      animations: [
+        { p: { translateX: 100 }, o: { duration: 1000 } },
+        { p: { top: '40%' }, o: { duration: 1000, sequenceQueue: false }},
+        { p: { rotateZ: 360 }, o: { duration: 1000 }},
+        { p: "custom.pulse", o: { duration: 1000 }},
+        { p: "custom.flipXOut", o: { duration: 1000 }},
+        { p: "custom.slideUpIn", o: { duration: 1000 }}
+      ]
     }]
     }
   },

@@ -87,7 +87,7 @@ var Scene = React.createClass({
     //读取属性上的elems对象数组，然后进行渲染
     var elems = this.props.elems.map(function(elem){
       return (
-        <Elem type={elem.type} id={elem.id} content={elem.content}></Elem>
+        <Elem type={elem.type} id={elem.id} content={elem.content} styles={elem.styles} animations={elem.animations}></Elem>
       );
     });
 

@@ -18,8 +18,8 @@ var Elem = React.createClass({
     Messenger.broadcast('elem.selected', {id: this.props.id});
     var  $this = $("#"+ this.props.id);
     //$this.addClass("elem-active");
-    selected = !this.state.selected;
-    this.extendState({selected: selected});
+    //selected = !this.state.selected;
+    this.extendState({selected: true});
     //this.goVelocity($this);
     return false;
     
@@ -29,6 +29,7 @@ var Elem = React.createClass({
     //如果直接删除元素会有个致命的bug，改如何解决？
     this.extendState({ styles: {display: 'none'}});
     $("#"+ this.props.id).attr('data-remove', 'true');
+    this.extendState({removed: true});
     //$this.remove();
 
     //这个直接暴力删除dom节点，会有问题吗？
@@ -65,8 +66,15 @@ var Elem = React.createClass({
 
   addListenners: function (){
     //监听来自Scene组件的以下事件
+    var self = this;
     Messenger.add('scene.mouse.move', this.props.id, this.onMouseMove);
     Messenger.add('scene.mouse.up', this.props.id, this.onMouseUp);
+    Messenger.add('scene.selected', this.props.id, function(){
+      self.extendState({selected: false});
+    });
+    Messenger.add('elem.selected', this.props.id, function(data){
+      if (data.id != self.props.id) self.extendState({selected: false});
+    });
   },
 
   //取消拖动或缩放的状态变量
@@ -337,25 +345,25 @@ var Elem = React.createClass({
   
   getInitialState: function() {
     var self = this, 
+        _animations = this.props.animations,
         _style = {};
 
     //compute styles
-    _style = $.extend(true, _style,
+    _style = $.extend(true, _style, 
       One.Style.getDefaultStyle(this.props.type), 
-      {backgroundImage: 'url(' + self.props.content + ')'}
+      this.props.styles
     );
+    if (this.props.type == 'image') {
+      $.extend(true, _style, 
+        { backgroundImage: 'url(' + self.props.content + ')'}
+      );  
+    }
 
     return {
       selected: false,
+      removed: false,
       styles: _style,
-      animations: [
-        { p: { translateX: 100 }, o: { duration: 1000 } },
-        { p: { top: '40%' }, o: { duration: 1000, sequenceQueue: false }},
-        { p: { rotateZ: 360 }, o: { duration: 1000 }},
-        { p: "custom.pulse", o: { duration: 1000 }},
-        { p: "custom.flipXOut", o: { duration: 1000 }},
-        { p: "custom.slideUpIn", o: { duration: 1000 }}
-      ],
+      animations: _animations,
       //全局标志位与数据存储
       data: {
         control: null,
