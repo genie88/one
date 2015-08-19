@@ -15,10 +15,11 @@
             <a href="javascript:;" class="ni add-page"> <i class="fa fa-plus"></i> <span>新增页面</span></a>  
         </div> 
         <div class="cate fl" id="elemNavBar"> 
-            <a href="javascript:;" class="ni j_new_text" data-type="text"> <i class="fa fa-file-text"></i> <span>文本</span></a> 
-            <a href="javascript:;" class="ni j_new_image" data-type="image"> <i class="fa fa-file-picture-o"></i> <span>图片</span> </a> <a href="javascript:;" class="ni j_new_button" data-type="button"> <i class="fa fa-square"></i> <span>按钮</span> </a> 
-            <a href="javascript:;" class="ni j_new_button" data-type="video"> <i class="fa fa-file-video-o"></i> <span>视频</span> </a> 
-            <a href="javascript:;" class="ni j_new_button" data-type="form"> <i class="fa fa-check-square-o"></i> <span>表单</span> </a>
+            <a href="javascript:;" class="ni" data-type="text"> <i class="fa fa-file-text"></i> <span>文本</span></a> 
+            <a href="javascript:;" class="ni" data-type="image"> <i class="fa fa-file-picture-o"></i> <span>图片</span> </a> 
+            <a href="javascript:;" class="ni" data-type="button"> <i class="fa fa-square"></i> <span>按钮</span> </a> 
+            <a href="javascript:;" class="ni" data-type="video"> <i class="fa fa-file-video-o"></i> <span>视频</span> </a> 
+            <a href="javascript:;" class="ni" data-type="form"> <i class="fa fa-check-square-o"></i> <span>表单</span> </a>
         </div>  
     </div>
 
@@ -60,6 +61,8 @@
     <script src="js/lib/jsxtransformer-0.13.3.js"></script>
     <script src="js/lib/velocity.min.js"></script>
     <script src="js/lib/velocity.ui.min.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/messenger.js"></script>
         <script type="text/javascript">
         //cancel warning log
         console.warn = function (){};
@@ -68,10 +71,13 @@
             width: $("#scene").width(),
             height: $("#scene").height()
         }
+
+        $("#elemNavBar").on('click', 'a', function(){
+            var type = $(this).attr('data-type');
+            Messenger.broadcast('elem.create', {type: type}); 
+        });
        
     </script>
-    <script src="js/effects.js"></script>
-    <script src="js/messenger.js"></script>
     <script src="js/style.js"></script>
     <script src="js/Elem.jsx" type="text/jsx"></script>
     <script src="js/Scene.jsx" type="text/jsx"></script>

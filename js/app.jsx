@@ -6,6 +6,8 @@ var App = React.createClass({
   		type: 'image',
       content: 'image/demo.png',
       styles: {
+        left: '26%',
+        top: '38%'
 
       },
       animations: [
@@ -22,7 +24,9 @@ var App = React.createClass({
       content: '你好， 世界',
       styles: {
         fontSize: '20px',
-        textAlign: 'center'
+        textAlign: 'center',
+        left: '10%',
+        top: '65%'
       },
       animations: [
         { p: { translateX: 100 }, o: { duration: 1000 } },
@@ -36,6 +40,12 @@ var App = React.createClass({
       id: "003",
       type: 'text',
       content: 'Hello, World',
+      styles: {
+        fontSize: '20px',
+        textAlign: 'center',
+        left: '10%',
+        top: '80%'
+      },
       animations: [
         { p: { translateX: 100 }, o: { duration: 1000 } },
         { p: { top: '40%' }, o: { duration: 1000, sequenceQueue: false }},
@@ -51,6 +61,8 @@ var App = React.createClass({
       styles: {
         width: '20%',
         height: '20%',
+        left: '40%',
+        top: '10%',
         borderRadius: '100%',
         backgroundColor: '#880000'
       },
@@ -72,16 +84,38 @@ var App = React.createClass({
     
   },
 
+  //元素创建事件处理函数
+  onElemCreate: function(data) {
+    this.createElem(data.type);
+  },
+
   //注册广播消息监听
   addListenners: function (){
     //监听来自Scene组件的以下事件
     Messenger.add('elem.remove', this.props.id, this.onElemRemove);
+    Messenger.add('elem.create', this.props.id, this.onElemCreate);
     //Messenger.add('elem.resize.start', this.props.id, this.onElemResizeStart);
   },
 
   componentDidMount: function(){
     //注册广播消息监听
     this.addListenners();
+  },
+
+  //创建元素
+  createElem: function(type) {
+    var elem = {
+      id: parseInt(Math.random() * 10000),
+      type: type,
+      content: type=='image'? 'image/demo.png' : '请在此输入文字',
+      styles: One.Style.getDefaultStyle(type),
+      animations: [
+      ]
+    };
+
+    var state = this.state;
+    this.state.elems.push(elem);
+    this.replaceState(state);
   },
 
   //从场景中删除元素
