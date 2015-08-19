@@ -75,14 +75,7 @@ var Scene = React.createClass({
   getInitialState: function() {
     return {
       selected: false,
-      styles: {
-        top: "0px",
-        left: "0px",
-        width: "100%",
-        height: "100%",
-        backgroundColor: "transparent",
-        backgroundImage: ""
-      },
+      styles: One.Style.getDefaultStyle('scene'),
       animations: [
       ]
     }
