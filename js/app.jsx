@@ -113,8 +113,8 @@ var App = React.createClass({
       ]
     };
 
-    var state = this.state;
-    this.state.elems.push(elem);
+    var state = $.extend(true, {}, this.state);
+    state.elems.push(elem);
     this.replaceState(state);
   },
 
