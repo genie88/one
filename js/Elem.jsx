@@ -26,9 +26,15 @@ var Elem = React.createClass({
   },
 
   onRemove: function() {
-    Messenger.broadcast('elem.remove', {id: this.props.id});
-    //alert("not implement yet");
-    
+    //如果直接删除元素会有个致命的bug，改如何解决？
+    this.extendState({ styles: {display: 'none'}});
+    $("#"+ this.props.id).attr('data-remove', 'true');
+    //$this.remove();
+
+    //这个直接暴力删除dom节点，会有问题吗？
+    //var  $this = $("#"+ this.props.id);
+    //$this.remove();
+    //Messenger.broadcast('elem.remove', {id: this.props.id});    
   },
 
   onDragStart: function(){
@@ -330,16 +336,18 @@ var Elem = React.createClass({
   },
   
   getInitialState: function() {
+    var self = this, 
+        _style = {};
+
+    //compute styles
+    _style = $.extend(true, _style,
+      One.Style.getDefaultStyle(this.props.type), 
+      {backgroundImage: 'url(' + self.props.content + ')'}
+    );
+
     return {
       selected: false,
-      heroimg: 'http://placebabies.com/500/500/1',
-      styles: {
-        top: "0px",
-        left: "0px",
-        width: "100px",
-        height: "100px",
-        backgroundColor: "transparent"
-      },
+      styles: _style,
       animations: [
         { p: { translateX: 100 }, o: { duration: 1000 } },
         { p: { top: '40%' }, o: { duration: 1000, sequenceQueue: false }},
@@ -370,7 +378,7 @@ var Elem = React.createClass({
     //内容区显示元素
     switch(self.props.type){
       case 'image':
-        _content = (<img src={self.props.content} style={self.state.styles}/>) ;
+        _content = '';
         break;
       case 'text':
         _content = self.props.content ;
