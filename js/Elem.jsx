@@ -143,14 +143,14 @@ var Elem = React.createClass({
         this.onDrag({data: currPoints});
 
         //移动元素
-        var top = parseInt(this.state.styles.top),
-            left= parseInt(this.state.styles.left);
+        var top = ( parseFloat(this.state.styles.top) /100 ) * SCREEN.height ,
+            left= ( parseFloat(this.state.styles.left) /100 )* SCREEN.width ;
         top += offset.y;
         left += offset.x;
         this.extendState({
           styles: {
-            top: top + 'px',
-            left: left +'px'
+            top:  (top  / SCREEN.height * 100) + '%',
+            left: (left / SCREEN.width   * 100) +'%'
           }
         });
       }
@@ -168,10 +168,10 @@ var Elem = React.createClass({
 
         //缩放元素
         var style = {},
-            width = parseInt(this.state.styles.width),
-            height= parseInt(this.state.styles.height),
-            top = parseInt(this.state.styles.top),
-            left= parseInt(this.state.styles.left);
+            width = ( parseFloat(this.state.styles.width) / 100 )* SCREEN.width,
+            height= ( parseFloat(this.state.styles.height)/ 100 )* SCREEN.height,
+            top = ( parseFloat(this.state.styles.top) / 100 ) * SCREEN.height,
+            left= ( parseFloat(this.state.styles.left)/ 100 ) * SCREEN.width;
 
         //根据当前点击位置不同，进入不同的处理分支
         switch(this.state.data.control){
@@ -182,10 +182,10 @@ var Elem = React.createClass({
             width -= offset.x; //offset.x为负值
             left += offset.x;
             style = {
-              top: top + 'px',
-              left: left + 'px',
-              width: width +'px',
-              height: height +'px'
+              top: (top  / SCREEN.height * 100) + '%',
+              left: (left / SCREEN.width   * 100) +'%',
+              width: (width / SCREEN.width   * 100) +'%',
+              height: (height  / SCREEN.height * 100) + '%'
             };
             break;
           //右上缩放控件
@@ -194,9 +194,9 @@ var Elem = React.createClass({
             top += offset.y;
             width += offset.x;
             style = {
-              top: top + 'px',
-              width: width + 'px',
-              height: height +'px'
+              top: (top  / SCREEN.height * 100) + '%',
+              width: (width / SCREEN.width   * 100) +'%',
+              height: (height  / SCREEN.height * 100) + '%'
             };
             break;
           //左下缩放控件
@@ -205,9 +205,9 @@ var Elem = React.createClass({
             height += offset.y;
             left += offset.x;
             style = {
-              left: left + 'px',
-              width: width + 'px',
-              height: height +'px'
+              left: (left / SCREEN.width   * 100) +'%',
+              width: (width / SCREEN.width   * 100) +'%',
+              height: (height  / SCREEN.height * 100) + '%'
             };
             break;
           //右下缩放控件
@@ -215,8 +215,8 @@ var Elem = React.createClass({
             width += offset.x;
             height += offset.y;
             style = {
-              width: width + 'px',
-              height: height +'px'
+              width: (width / SCREEN.width   * 100) +'%',
+              height: (height  / SCREEN.height * 100) + '%'
             };
             break;
           //顶部缩放控件
@@ -224,27 +224,27 @@ var Elem = React.createClass({
             height -= offset.y; //offset.y为负值
             top += offset.y;
             style = {
-              top: top + 'px',
-              height: height +'px'
+              top: (top  / SCREEN.height * 100) + '%',
+              height: (height  / SCREEN.height * 100) + '%'
             };
             break;
           //右缩放控件
           case 'r' :
             width += offset.x;
-            style = { width: width + 'px' };
+            style = { width: (width / SCREEN.width   * 100) +'%'};
             break; 
           //底部缩放控件
           case 'b' : 
             height += offset.y;
-            style = { height: height +'px' };
+            style = { height: (height  / SCREEN.height * 100) + '%' };
             break;
           //左缩放控件
           case 'l' :
             width -= offset.x; //offset.x为负值
             left += offset.x;
             style = {
-              left: left + 'px',
-              width: width +'px'
+              left: (left / SCREEN.width   * 100) +'%',
+              width: (width  / SCREEN.width * 100) + '%'
             };
             break;
           //删除组件按钮
