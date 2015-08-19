@@ -1,0 +1,28 @@
+{
+  "name": "onepage",
+  "version": "0.0.1",
+  "description": "a free html5 page maker",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "genie88",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.1",
+    "react": "^0.13.3"
+  },
+  "devDependencies": {
+    "browserify": "^11.0.0",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-less": "^3.0.3",
+    "gulp-livereload": "^3.8.0",
+    "gulp-minify-css": "^1.2.0",
+    "gulp-shell": "^0.4.2",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0",
+    "reactify": "^1.1.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}
