@@ -1,4 +1,6 @@
 /** @jsx React.DOM **/
+var React =  require('React');
+var Elem =  require('./Elem.jsx');
 
 var Scene = React.createClass({
   id : "scene-" + parseInt(Math.random() * 10000),
@@ -105,3 +107,6 @@ var Scene = React.createClass({
     );
   }
 });
+
+
+module.exports =  Scene;

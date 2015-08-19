@@ -1,4 +1,5 @@
 /** @jsx React.DOM **/
+var React =  require('React');
 
 var SettingPanel = React.createClass({
   getInitialState: function() {
@@ -16,5 +17,4 @@ var SettingPanel = React.createClass({
   }
 });
 
-
-React.render(<SettingPanel />, document.getElementById('settingPanel'));
+module.exports =  SettingPanel;

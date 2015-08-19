@@ -11,6 +11,7 @@
    } 
  *
  **/
+var React =  require('React');
 var Elem = React.createClass({
 
 
@@ -424,3 +425,5 @@ var Elem = React.createClass({
     );
   }
 });
+
+module.exports =  Elem;

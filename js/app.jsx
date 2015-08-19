@@ -1,3 +1,9 @@
+var React =  require('React');
+var SettingPanel = require('./widget/settingPanel.jsx');
+var Scene =  require('./Scene.jsx');
+var Elem =  require('./Elem.jsx');
+
+
 var App = React.createClass({
   getInitialState: function() {
     return {
@@ -145,3 +151,4 @@ var App = React.createClass({
 
 
 React.render(<App id="app-001"/>, document.getElementById('scene')); 
+React.render(<SettingPanel />, document.getElementById('settingPanel'));
