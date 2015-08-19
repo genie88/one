@@ -17,7 +17,7 @@ var Style = {
           fontWeight: 'normal',
           fontFamily: 'Microsoft YaHei',
           fontSize: '14px',
-          textAlign: 'left',
+          textAlign: 'center',
           lineHeight: '1',
           // textShadow: 'rgb(221, 221, 221) 0px 0px 0px',
           left: '0%',

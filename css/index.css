@@ -46,7 +46,11 @@ body {padding:0;margin:0;background-color:#fff;font-family:'open sans',helvetica
     margin-left: 2px;
 }
 /* ----------- //  common css-------------------- */
-
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; /* Webkit */
+    user-select: none;
+}
 #scene {
     width: 100%;
     height: 100%;

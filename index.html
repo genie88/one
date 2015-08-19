@@ -2,12 +2,31 @@
   <head> 
     <meta charset="UTF-8">
     <title>index</title>
+    <link href="css/common.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
     <link href="css/editor.css" rel="stylesheet">
+    <link href="css/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+
   </head>
   <body>
-    <div class="dark">
-        <div class="iphone-container">
+    <!-- 菜单 -->
+    <div class="nav clearfix" style="min-width:500px;"> 
+        <div class="ppt fl dropdown j_tmpl_panel" data-panel="tmpl"> 
+            <a href="javascript:;" class="ni add-page"> <i class="fa fa-plus"></i> <span>新增页面</span></a>  
+        </div> 
+        <div class="cate fl" id="elemNavBar"> 
+            <a href="javascript:;" class="ni j_new_text" data-type="text"> <i class="fa fa-file-text"></i> <span>文本</span></a> 
+            <a href="javascript:;" class="ni j_new_image" data-type="image"> <i class="fa fa-file-picture-o"></i> <span>图片</span> </a> <a href="javascript:;" class="ni j_new_button" data-type="button"> <i class="fa fa-square"></i> <span>按钮</span> </a> 
+            <a href="javascript:;" class="ni j_new_button" data-type="video"> <i class="fa fa-file-video-o"></i> <span>视频</span> </a> 
+            <a href="javascript:;" class="ni j_new_button" data-type="form"> <i class="fa fa-check-square-o"></i> <span>表单</span> </a>
+        </div>  
+    </div>
+
+    <div class="contaner" style="position:relative;height: 800px;background-color: #f2f2f2;">
+      <!-- 主显示区 -->
+      <div class="main" style="width: 70%;height: 100%;float:left;">
+        <div class="dark">
+          <div class="iphone-container">
             <div class="phone-shape small">
                 <span class="button-one buttons"></span>
                 <span class="button-two buttons"></span>
@@ -27,8 +46,15 @@
                 </div>
                 <div class="circle-button"></div>
             </div>
+          </div>
         </div>
+      </div>
+      <!-- 右侧设置面板 -->
+      <div class="settings" style="position:absolute; height:100%;float: left;background-color: #fff; border-left: 1px solid #ccc; right: 0; width: 340px;">
+        hello
+      </div>
     </div>
+    
     <script src="js/lib/jquery-1.11.1.min.js"></script>
     <script src="js/lib/react-0.13.3.js"></script>
     <script src="js/lib/jsxtransformer-0.13.3.js"></script>

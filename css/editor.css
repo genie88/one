@@ -63,7 +63,7 @@ hr {
 	height:60px;
 	position:relative;
 	width:100%;
-	z-index:100
+	z-index:100;
 }
 .btn:hover {
 	background-color:#F07601;
@@ -95,8 +95,7 @@ hr {
 }
 .nav .cate {
 	height:100%;
-	left:50%;
-	margin-left:-200px;
+	left:100px;
 	position:absolute
 }
 .nav .title .name {

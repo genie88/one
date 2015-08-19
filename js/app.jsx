@@ -5,6 +5,9 @@ var App = React.createClass({
   		id: "001",
   		type: 'image',
       content: 'image/demo.png',
+      styles: {
+
+      },
       animations: [
         { p: { translateX: 100 }, o: { duration: 1000 } },
         { p: { top: '40%' }, o: { duration: 1000, sequenceQueue: false }},
@@ -17,6 +20,10 @@ var App = React.createClass({
   		id: "002",
   		type: 'text',
       content: '你好， 世界',
+      styles: {
+        fontSize: '20px',
+        textAlign: 'center'
+      },
       animations: [
         { p: { translateX: 100 }, o: { duration: 1000 } },
         { p: { top: '40%' }, o: { duration: 1000, sequenceQueue: false }},
@@ -29,6 +36,24 @@ var App = React.createClass({
       id: "003",
       type: 'text',
       content: 'Hello, World',
+      animations: [
+        { p: { translateX: 100 }, o: { duration: 1000 } },
+        { p: { top: '40%' }, o: { duration: 1000, sequenceQueue: false }},
+        { p: { rotateZ: 360 }, o: { duration: 1000 }},
+        { p: "custom.pulse", o: { duration: 1000 }},
+        { p: "custom.flipXOut", o: { duration: 1000 }},
+        { p: "custom.slideUpIn", o: { duration: 1000 }}
+      ]
+    },{
+      id: "004",
+      type: 'text',
+      content: '',
+      styles: {
+        width: '20%',
+        height: '20%',
+        borderRadius: '100%',
+        backgroundColor: '#880000'
+      },
       animations: [
         { p: { translateX: 100 }, o: { duration: 1000 } },
         { p: { top: '40%' }, o: { duration: 1000, sequenceQueue: false }},
