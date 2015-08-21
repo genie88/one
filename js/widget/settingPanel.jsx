@@ -1,5 +1,6 @@
 /** @jsx React.DOM **/
 var React =  require('React');
+var ColorPicker = require('../components/colorPicker.jsx');
 
 var SettingPanel = React.createClass({
   getInitialState: function() {
@@ -12,7 +13,7 @@ var SettingPanel = React.createClass({
     var self = this;
 
     return (
-    	<div> settingPanel </div>
+    	<ColorPicker> </ColorPicker>
     );
   }
 });

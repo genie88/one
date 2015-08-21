@@ -8,6 +8,7 @@
   "author": "genie88",
   "license": "MIT",
   "dependencies": {
+    "colr": "^1.2.2",
     "express": "^4.13.1",
     "react": "^0.13.3",
     "react-colorpicker": "^0.3.14"
