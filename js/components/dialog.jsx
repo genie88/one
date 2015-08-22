@@ -63,21 +63,25 @@ var Dialog = React.createClass({
   render: function() {
     var self = this;
     var style = {
-      display: this.props.show ? 'block' : 'none'
+      visibility: this.props.show ? 'visible' : 'hidden'
     }
 
+    var dialogClassName = "md-modal md-effect-3" + (this.props.show ? " md-show": '')
+
     return (
-      <div id={this.props.id} style={style}> 
-        <div className="md-modal md-effect-20" >
+      <div id={this.props.id} style={style} > 
+        <div className= {dialogClassName} >
+          <div className= "md-content">
           <div className="md-header"> 
             <span> {this.props.title} </span>
             <i className="fa fa-close" onClick={this.onCloseHandler}> </i>
           </div>
-          <div className="md-content">   
+          <div className="md-body">   
               {this.props.children}
           </div>
           <div className="md-footer">
             {this.getButtons()}
+          </div>
           </div>
         </div>
         <div className="md-overlay" onClick={this.onBackdropHandler}></div>
