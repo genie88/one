@@ -1,12 +1,14 @@
 var Colr = require('colr');
 var React = require('React');
 var CPicker = require('react-colorpicker');
+var Dialog = require('./dialog.jsx');
 
 var ColorPicker = React.createClass({
 
   getInitialState: function () {
     return {
-      color: '#000000',
+      color: this.setColor(),
+      modalIsOpen: false
     };
   },
 
@@ -23,6 +25,14 @@ var ColorPicker = React.createClass({
     });
   },
 
+  openPanel: function() {
+    this.setState({modalIsOpen: true});
+  },
+
+  closeModal: function() {
+    this.setState({modalIsOpen: false});
+  },
+
   handleChange: function (color) {
     this.setState({
       color: color.toHex()
@@ -31,16 +41,12 @@ var ColorPicker = React.createClass({
 
   render: function () {
     return (
-      <div>
-        <button onClick={this.setColor}>Load Random Color</button>
-        <div>Active: {this.state.color}</div>
-
-        <div id='container'>
-          <CPicker
-            color={this.state.color}
-            onChange={this.handleChange}
-          />
-        </div>
+      <div className="cpicker">
+        <span className="color-box" style={{backgroundColor: this.state.color}}
+          onClick={this.openPanel} > </span>
+        <Dialog title="调色板" show={this.state.modalIsOpen} onRequestClose={this.closeModal}> 
+          <CPicker color={this.state.color} onChange={this.handleChange}/>
+        </Dialog>
       </div>
     );
   },
