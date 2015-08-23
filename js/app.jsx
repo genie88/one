@@ -2,6 +2,7 @@ var React =  require('React');
 var SettingPanel = require('./widget/settingPanel.jsx');
 var Scene =  require('./Scene.jsx');
 var Elem =  require('./Elem.jsx');
+var Notify =  require('./components/notify.jsx');
 
 
 var App = React.createClass({
@@ -143,7 +144,10 @@ var App = React.createClass({
 
   render: function(){
   	return (
-  	  <Scene elems={this.state.elems}/>
+  	  <div>
+        <Scene elems={this.state.elems}/>
+        <Notify />
+      </div>
   	)
   }
 
