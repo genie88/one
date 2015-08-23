@@ -78,10 +78,10 @@ var Notify = React.createClass({
   
 
   render: function() {
-    var self = this;
+    var self = this,
         style = {
           display: this.state.show ? 'block': 'none'
-        }
+        },
 
         notifyClassName = "c-notify " + this.state.level;
 
