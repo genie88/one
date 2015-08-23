@@ -3,10 +3,10 @@ var React =  require('React');
 
 
 /**
- * A Small But Useful Notifycation component.
+ * A Small But Useful Notification component.
  * Usage: 
  *  <Notify dismissable onDismiss={this.onDismissHandler}/>
- *  When you want to push a notifycation, you just call the following lines :
+ *  When you want to push a notification, you just call the following lines :
  *  Messenger.broadcast('notify.push', {
         content: '', 
         dismissable: false, 
@@ -23,7 +23,9 @@ var Notify = React.createClass({
   getInitialState: function() {
     return {
       show: false,
-      content: ''
+      level: 'info',
+      content: '',
+      tid : 0
     }
   },
 
@@ -45,12 +47,17 @@ var Notify = React.createClass({
     timeout = msg.timeout || 2000;
     level = msg.level || 'info';
 
-    this.extendState({show: true, content: msg.content});
+
+    clearTimeout(this.state.tid);
+
+    this.extendState({show: true, content: msg.content, level: level});
     if (dismissable) {
       //延时自动消失
-      setTimeout(function(){
+      tid = setTimeout(function(){
         self.onDismissHandler();
       }, timeout);
+      //缓存tid
+      this.extendState({tid: tid});
     }
   },
 
@@ -76,8 +83,10 @@ var Notify = React.createClass({
           display: this.state.show ? 'block': 'none'
         }
 
+        notifyClassName = "c-notify " + this.state.level;
+
     return (
-      <div id={this.props.id} className="c-notify" style={style} > 
+      <div id={this.props.id} className={notifyClassName} style={style}> 
         <div>{this.state.content}</div>
         <i className="fa fa-close" onClick={this.onDismissHandler}> </i>
       </div>
