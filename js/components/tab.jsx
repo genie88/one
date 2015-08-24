@@ -1,3 +1,29 @@
+/** @jsx React.DOM */
+
+/**
+ * A Simple Tab Component
+ *
+ * Usage
+    var Tabs = require('react-simpletabs');
+    var App = React.createClass({
+      render: function() {
+        return (
+          <Tabs>
+            <Tabs.Panel title='Tab #1'>
+              <h2>Content #1 here</h2>
+            </Tabs.Panel>
+            <Tabs.Panel title='Tab #2'>
+              <h2>Content #2 here</h2>
+            </Tabs.Panel>
+            <Tabs.Panel title='Tab #3'>
+              <h2>Content #3 here</h2>
+            </Tabs.Panel>
+          </Tabs>
+        );
+      }
+    });
+    React.renderComponent(<App />, mountNode);}
+*/
 'use strict';
 
 var React = require('react');
