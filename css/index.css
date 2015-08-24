@@ -93,3 +93,20 @@ body {
 }
 
 
+
+
+.c-button {
+    width: 40px;
+    text-align: center;
+    border: none;
+    padding: 5px;
+    background: #666;
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: inline-block;
+    margin: 3px 2px;
+    border-radius: 2px;
+}
+

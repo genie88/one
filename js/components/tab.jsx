@@ -4,7 +4,7 @@
  * A Simple Tab Component
  *
  * Usage
-    var Tabs = require('react-simpletabs');
+    var Tabs = require('./tab.jsx');
     var App = React.createClass({
       render: function() {
         return (

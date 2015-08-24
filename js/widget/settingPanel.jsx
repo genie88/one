@@ -1,7 +1,7 @@
 /** @jsx React.DOM **/
 var React =  require('React');
 var Tabs = require('../components/tab.jsx');
-var ColorPicker = require('../components/colorPicker.jsx');
+var SettingTextPanel = require('./settingText.jsx');
 
 var SettingPanel = React.createClass({
 
@@ -17,8 +17,7 @@ var SettingPanel = React.createClass({
     return (
     	 <Tabs>
             <Tabs.Panel title='文本'>
-              <h2>Content #1 here</h2>
-              <ColorPicker/> 
+              <SettingTextPanel /> 
             </Tabs.Panel>
             <Tabs.Panel title='样式'>
               <h2>Content #2 here</h2>
