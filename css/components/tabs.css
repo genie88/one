@@ -1,26 +1,29 @@
 .tabs-menu {
-  display: table;
+  display: inline-block;
   list-style: none;
-  padding: 0;
+  padding: 10px 10px 0 10px;
   margin: 0;
   width: 100%;
   text-align: center;
-  padding: 10px;
+  background-color: #f2f2f2;
 }
 
 .tabs-menu-item {
   float: left;
   width: 80px;
+
 }
 
 .tabs-menu-item a {
   display: block;
   color: #A9A9A9;
+  padding-bottom: 8px;
 }
 
 .tabs-menu-item:not(.is-active) a:hover,
 .tabs-menu-item.is-active a {
   color: #E34545;
+
   border-bottom: 3px solid #E34545;
 }
 
