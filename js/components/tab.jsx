@@ -26,12 +26,8 @@
 */
 'use strict';
 
-var React = require('react');
+var React = require('React');
 var classNames = require('classnames');
-
-if (process.env.NODE_ENV !== 'test') {
-  require('../../css/components/tabs.css');
-}
 
 var Tabs = React.createClass({
   displayName: 'Tabs',
@@ -90,7 +86,7 @@ var Tabs = React.createClass({
       if(cancel === false){ return }
     }
 
-    this.setState({ tabActive: index }, () => {
+    this.setState({ tabActive: index }, function(){
       if (onAfterChange) {
         onAfterChange(index, $selectedPanel, $selectedTabMenu);
       }
@@ -107,20 +103,27 @@ var Tabs = React.createClass({
       this.props.children = [this.props.children];
     }
 
+    var self = this;
+
     var $menuItems = this.props.children
-      .map($panel => typeof $panel === 'function' ? $panel() : $panel)
-      .filter($panel => $panel)
-      .map(($panel, index) => {
-        var ref = `tab-menu-${index + 1}`;
+      .map(function($panel){
+        typeof $panel === 'function' ? $panel() : $panel;
+        return $panel;
+      })
+      .filter(function($panel) {
+        return $panel;
+      })
+      .map(function($panel, index){
+        var ref = 'tab-menu-'+ (index + 1);
         var title = $panel.props.title;
         var classes = classNames(
           'tabs-menu-item',
-          this.state.tabActive === (index + 1) && 'is-active'
+          self.state.tabActive === (index + 1) && 'is-active'
         );
 
         return (
           <li ref={ref} key={index} className={classes}>
-            <a href='#' onClick={this.setActive.bind(this, index + 1)}>
+            <a href='#' onClick={self.setActive.bind(self, index + 1)}>
               {title}
             </a>
           </li>
